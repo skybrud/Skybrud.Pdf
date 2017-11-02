@@ -21,11 +21,11 @@ namespace Skybrud.Pdf.FormattingObjects {
             AddRange(elements);
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             return AddChildren(new XElement(
                 FoDocument.Namespace + "flow",
                 new XAttribute("flow-name", Name)
-            ), Elements);
+            ), Elements, options);
         }
 
     }

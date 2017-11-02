@@ -22,7 +22,7 @@ namespace Skybrud.Pdf.FormattingObjects {
             Type = type;
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xMaster = new XElement(FoDocument.Namespace + "region-" + Type);
             if (!String.IsNullOrEmpty(Name)) xMaster.Add(new XAttribute("region-name", Name));
             if (!String.IsNullOrEmpty(BackgroundRepeat)) xMaster.Add(new XAttribute("background-repeat", BackgroundRepeat));

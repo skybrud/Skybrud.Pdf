@@ -36,7 +36,7 @@ namespace Skybrud.Pdf.FormattingObjects {
 
         #region Member methods
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xRow = new XElement(FoDocument.Namespace + "table-row");
             AddAttributes(xRow);
             foreach (FoTableCell cell in Cells) {

@@ -68,6 +68,7 @@
     <Compile Include="FormattingObjects\FoPageNumber.cs" />
     <Compile Include="FormattingObjects\FoPageNumberCitationLast.cs" />
     <Compile Include="FormattingObjects\FoPageRegion.cs" />
+    <Compile Include="FormattingObjects\FoRenderOptions.cs" />
     <Compile Include="FormattingObjects\FoStaticContent.cs" />
     <Compile Include="FormattingObjects\FoTable.cs" />
     <Compile Include="FormattingObjects\FoTableCell.cs" />

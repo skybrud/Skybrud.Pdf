@@ -74,7 +74,7 @@ namespace Skybrud.Pdf.FormattingObjects {
 
         public bool HasChildren => Elements.Count > 0;
 
-        protected static XElement AddChildren(XElement parent, IEnumerable<FoBaseElement> elements) {
+        protected static XElement AddChildren(XElement parent, IEnumerable<FoBaseElement> elements, FoRenderOptions options) {
 
             string lc = parent.Name.LocalName;
 
@@ -90,12 +90,18 @@ namespace Skybrud.Pdf.FormattingObjects {
 
             foreach (FoBaseElement e in elements) {
                 if (e is FoElement) {
-                    parent.Add(((FoElement)e).ToXElement());
+                    parent.Add(((FoElement)e).ToXElement(options));
                 } else if (e is FoText) {
-                    parent.Add(new XCData(((FoText) e).Value + ""));
+                    if (options == null || options.UseCData) {
+                        parent.Add(new XCData(((FoText) e).Value + "")); 
+                    } else {
+                        parent.Add((((FoText)e).Value + ""));
+                    }
                 }
             }
+
             return parent;
+
         }
 
         public FoContainer AddRange(IEnumerable<FoBaseElement> elements) {

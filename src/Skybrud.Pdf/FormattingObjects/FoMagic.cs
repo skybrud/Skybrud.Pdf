@@ -10,7 +10,7 @@ namespace Skybrud.Pdf.FormattingObjects {
             X = x;
         }
         
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             return X;
         }
     

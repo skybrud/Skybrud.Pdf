@@ -17,10 +17,10 @@ namespace Skybrud.Pdf.FormattingObjects {
             AddRange(elements);
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlockContainer = new XElement(FoDocument.Namespace + "block-container");
             AddAttributes(xBlockContainer);
-            AddChildren(xBlockContainer, Elements);
+            AddChildren(xBlockContainer, Elements, options);
             return xBlockContainer;
         }
 

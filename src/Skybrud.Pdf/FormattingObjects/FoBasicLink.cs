@@ -33,10 +33,10 @@ namespace Skybrud.Pdf.FormattingObjects {
 
         #endregion
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlock = new XElement(FoDocument.Namespace + "basic-link");
             AddAttributes(xBlock);
-            AddChildren(xBlock, Elements);
+            AddChildren(xBlock, Elements, options);
             if (!String.IsNullOrEmpty(InternalDestination)) {
                 xBlock.Add(new XAttribute("internal-destination", InternalDestination));
             } else if (!String.IsNullOrEmpty(ExternalDestination)) {

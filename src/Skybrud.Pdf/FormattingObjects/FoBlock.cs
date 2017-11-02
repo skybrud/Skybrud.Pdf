@@ -42,10 +42,10 @@ namespace Skybrud.Pdf.FormattingObjects {
             Add(new FoInline(text + ""));
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlock = new XElement(FoDocument.Namespace + "block");
             AddAttributes(xBlock);
-            AddChildren(xBlock, Elements);
+            AddChildren(xBlock, Elements, options);
             return xBlock;
         }
 
@@ -65,10 +65,10 @@ namespace Skybrud.Pdf.FormattingObjects {
 
     public class FoListBlock : FoBlock {
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlock = new XElement(FoDocument.Namespace + "list-block");
             AddAttributes(xBlock);
-            AddChildren(xBlock, Elements);
+            AddChildren(xBlock, Elements, options);
             return xBlock;
         }
 
@@ -76,10 +76,10 @@ namespace Skybrud.Pdf.FormattingObjects {
 
     public class FoListItem : FoBlock {
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlock = new XElement(FoDocument.Namespace + "list-item");
             AddAttributes(xBlock);
-            AddChildren(xBlock, Elements);
+            AddChildren(xBlock, Elements, options);
             return xBlock;
         }
 
@@ -90,10 +90,10 @@ namespace Skybrud.Pdf.FormattingObjects {
         public string StartIndent { get; set; }
         public string EndIndent { get; set; }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xLabel = new XElement(FoDocument.Namespace + "list-item-label");
             AddAttributes(xLabel);
-            AddChildren(xLabel, Elements);
+            AddChildren(xLabel, Elements, options);
             return xLabel;
         }
 
@@ -111,10 +111,10 @@ namespace Skybrud.Pdf.FormattingObjects {
         public string StartIndent { get; set; }
         public string EndIndent { get; set; }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlock = new XElement(FoDocument.Namespace + "list-item-body");
             AddAttributes(xBlock);
-            AddChildren(xBlock, Elements);
+            AddChildren(xBlock, Elements, options);
             return xBlock;
         }
 

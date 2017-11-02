@@ -20,10 +20,10 @@ namespace Skybrud.Pdf.FormattingObjects {
             AddRange(elements);
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xCell = new XElement(FoDocument.Namespace + "table-cell");
             AddAttributes(xCell);
-            AddChildren(xCell, Elements);
+            AddChildren(xCell, Elements, options);
             return xCell;
         }
 

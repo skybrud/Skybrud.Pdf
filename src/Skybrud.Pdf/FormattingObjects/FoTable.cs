@@ -28,7 +28,7 @@ namespace Skybrud.Pdf.FormattingObjects {
             AddRows(rows);
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xTable = new XElement(FoDocument.Namespace + "table");
             if (!String.IsNullOrEmpty(Margin)) xTable.Add(new XAttribute("margin", Margin));
             if (!String.IsNullOrEmpty(MarginTop)) xTable.Add(new XAttribute("margin-top", MarginTop));

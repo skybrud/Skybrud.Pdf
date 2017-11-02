@@ -21,7 +21,7 @@ namespace Skybrud.Pdf.FormattingObjects {
         public string ContentHeight;
         public string Scaling;
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xGraphic = new XElement(FoDocument.Namespace + "external-graphic", new XAttribute("src", "url(" + Url + ")"));
             if (!String.IsNullOrEmpty(Width)) xGraphic.Add(new XAttribute("width", Width));
             if (!String.IsNullOrEmpty(Height)) xGraphic.Add(new XAttribute("height", Height));

@@ -4,14 +4,18 @@ namespace Skybrud.Pdf.FormattingObjects {
 
     public abstract class FoElement : FoBaseElement {
 
-        public abstract XElement ToXElement();
+        public XElement ToXElement() {
+            return ToXElement(default(FoRenderOptions));
+        }
+
+        public abstract XElement ToXElement(FoRenderOptions options);
 
         public override string ToString() {
             return ToXElement().ToString();
         }
 
-        public string ToString(SaveOptions options) {
-            return ToXElement().ToString(options);
+        public string ToString(FoRenderOptions options) {
+            return ToXElement(options).ToString(options?.SaveOptions ?? SaveOptions.None);
         }
 
     }

@@ -24,12 +24,12 @@ namespace Skybrud.Pdf.FormattingObjects {
 
         #endregion
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlock = new XElement(FoDocument.Namespace + "page-number-citation-last");
             if (!String.IsNullOrWhiteSpace(PageCitationStrategy)) xBlock.Add(new XAttribute("page-citation-strategy", "all"));
             if (!String.IsNullOrWhiteSpace(ReferenceId)) xBlock.Add(new XAttribute("ref-id", "Master"));
             AddAttributes(xBlock);
-            AddChildren(xBlock, Elements);
+            AddChildren(xBlock, Elements, options);
             return xBlock;
         }
 

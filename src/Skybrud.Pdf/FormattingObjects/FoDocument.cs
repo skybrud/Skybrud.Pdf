@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Skybrud.Pdf.FormattingObjects {
@@ -32,10 +33,14 @@ namespace Skybrud.Pdf.FormattingObjects {
         }
 
         public XElement ToXElement() {
+            return ToXElement(default(FoRenderOptions));
+        }
+
+        public XElement ToXElement(FoRenderOptions options) {
 
             XElement element = new XElement(Namespace + "root",
-                new XAttribute(XNamespace.Xmlns + "fo", Namespace),
-                new XAttribute(XNamespace.Xmlns + "ibex", NamespaceIbex)
+                new XAttribute(XNamespace.Xmlns + "fo", Namespace)
+                //new XAttribute(XNamespace.Xmlns + "ibex", NamespaceIbex)
             );
 
             XElement xProperties = new XElement(NamespaceIbex + "properties");
@@ -46,14 +51,36 @@ namespace Skybrud.Pdf.FormattingObjects {
             if (Keywords != null && Keywords.Length > 0) xProperties.Add(new XAttribute("title", String.Join(",", Keywords)));
             if (!String.IsNullOrEmpty(Creator)) xProperties.Add(new XAttribute("creator", Creator));
 
-            element.Add(LayoutMasterSet.ToXElement());
+            element.Add(LayoutMasterSet.ToXElement(options));
 
             foreach (var page in _pages) {
-                element.Add(page.ToXElement());
+                element.Add(page.ToXElement(options));
             }
 
             return element;
 
+        }
+        public XDocument ToXDocument() {
+            return ToXDocument(default(FoRenderOptions));
+        }
+
+        public XDocument ToXDocument(FoRenderOptions options) {
+            return new XDocument(
+                new XDeclaration("1.0", "utf-8", null),
+                ToXElement(options)
+            );
+        }
+        
+        public XmlDocument ToXmlDocument() {
+            return ToXmlDocument(default(FoRenderOptions));
+        }
+        
+        public XmlDocument ToXmlDocument(FoRenderOptions options) {
+            XmlDocument xmlDocument = new XmlDocument();
+            using (XmlReader xmlReader = ToXDocument(options).CreateReader()) {
+                xmlDocument.Load(xmlReader);
+            }
+            return xmlDocument;
         }
 
         public override string ToString() {
@@ -73,7 +100,6 @@ namespace Skybrud.Pdf.FormattingObjects {
             AddPage(page);
             return page;
         }
-    
     
     }
 

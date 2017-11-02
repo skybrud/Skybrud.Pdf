@@ -38,7 +38,7 @@ namespace Skybrud.Pdf.FormattingObjects {
             if (flow != null) _flows.Add(flow);
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
 
             XElement xPageSequence = new XElement(
                 FoDocument.Namespace + "page-sequence",
@@ -50,11 +50,11 @@ namespace Skybrud.Pdf.FormattingObjects {
             }
 
             foreach (FoStaticContent foStaticContent in _static) {
-                xPageSequence.Add(foStaticContent.ToXElement());
+                xPageSequence.Add(foStaticContent.ToXElement(options));
             }
 
             foreach (FoFlow foFlow in _flows) {
-                xPageSequence.Add(foFlow.ToXElement());
+                xPageSequence.Add(foFlow.ToXElement(options));
             }
 
             return xPageSequence;

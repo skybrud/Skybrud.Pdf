@@ -31,7 +31,7 @@ namespace Skybrud.Pdf.FormattingObjects {
             if (region != null) _regions.Add(region);
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xMaster = new XElement(
                 FoDocument.Namespace + "simple-page-master",
                 new XAttribute("master-name", Name ?? ""),

@@ -14,7 +14,7 @@ namespace Skybrud.Pdf.FormattingObjects {
             get { return new FoLeader { Pattern = "rule", Length = "100%", Thickness = "1px" }; }
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xLeader = new XElement(FoDocument.Namespace + "leader");
             if (!String.IsNullOrEmpty(Pattern)) xLeader.Add(new XAttribute("leader-pattern", Pattern));
             if (!String.IsNullOrEmpty(Length)) xLeader.Add(new XAttribute("leader-length", Length));

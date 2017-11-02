@@ -16,7 +16,7 @@ namespace Skybrud.Pdf.FormattingObjects {
             _masterPages.Add(masterPage);
         }
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             return new XElement(
                 FoDocument.Namespace + "layout-master-set",
                 from master in _masterPages select master.ToXElement()

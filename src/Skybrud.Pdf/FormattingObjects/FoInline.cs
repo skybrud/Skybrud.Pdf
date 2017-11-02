@@ -25,10 +25,10 @@ namespace Skybrud.Pdf.FormattingObjects {
 
         #endregion
 
-        public override XElement ToXElement() {
+        public override XElement ToXElement(FoRenderOptions options) {
             XElement xBlock = new XElement(FoDocument.Namespace + "inline");
             AddAttributes(xBlock);
-            AddChildren(xBlock, Elements);
+            AddChildren(xBlock, Elements, options);
             return xBlock;
         }
 
