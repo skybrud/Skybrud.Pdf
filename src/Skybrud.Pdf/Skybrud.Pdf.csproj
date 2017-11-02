@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{492D67C2-B855-40E0-953F-BEA1FB8CB316}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Skybrud.Pdf</RootNamespace>
+    <AssemblyName>Skybrud.Pdf</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Skybrud.Essentials, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Skybrud.Essentials.1.0.10\lib\net45\Skybrud.Essentials.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormattingObjects\Extensions\FoExtensions.cs" />
+    <Compile Include="FormattingObjects\FoBaseElement.cs" />
+    <Compile Include="FormattingObjects\FoBasicLink.cs" />
+    <Compile Include="FormattingObjects\FoBlock.cs" />
+    <Compile Include="FormattingObjects\FoBlockContainer.cs" />
+    <Compile Include="FormattingObjects\FoContainer.cs" />
+    <Compile Include="FormattingObjects\FoDocument.cs" />
+    <Compile Include="FormattingObjects\FoElement.cs" />
+    <Compile Include="FormattingObjects\FoExternalGraphic.cs" />
+    <Compile Include="FormattingObjects\FoFlow.cs" />
+    <Compile Include="FormattingObjects\FoHelper.cs" />
+    <Compile Include="FormattingObjects\FoInline.cs" />
+    <Compile Include="FormattingObjects\FoLayoutMasterSet.cs" />
+    <Compile Include="FormattingObjects\FoLeader.cs" />
+    <Compile Include="FormattingObjects\FoMagic.cs" />
+    <Compile Include="FormattingObjects\FoMasterPage.cs" />
+    <Compile Include="FormattingObjects\FoPage.cs" />
+    <Compile Include="FormattingObjects\FoPageElement.cs" />
+    <Compile Include="FormattingObjects\FoPageNumber.cs" />
+    <Compile Include="FormattingObjects\FoPageNumberCitationLast.cs" />
+    <Compile Include="FormattingObjects\FoPageRegion.cs" />
+    <Compile Include="FormattingObjects\FoStaticContent.cs" />
+    <Compile Include="FormattingObjects\FoTable.cs" />
+    <Compile Include="FormattingObjects\FoTableCell.cs" />
+    <Compile Include="FormattingObjects\FoTableColumn.cs" />
+    <Compile Include="FormattingObjects\FoTableRow.cs" />
+    <Compile Include="FormattingObjects\FoText.cs" />
+    <Compile Include="FormattingObjects\Styles\FoKeepTogether.cs" />
+    <Compile Include="FormattingObjects\Styles\FoFontStyle.cs" />
+    <Compile Include="FormattingObjects\Styles\FoFontWeight.cs" />
+    <Compile Include="FormattingObjects\Styles\FoDisplayAlign.cs" />
+    <Compile Include="FormattingObjects\Styles\FoTextAlign.cs" />
+    <Compile Include="FormattingObjects\Styles\FoTextDecoration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
