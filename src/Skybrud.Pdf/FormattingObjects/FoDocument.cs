@@ -1,65 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Skybrud.Pdf.FormattingObjects.Ibex;
+using Skybrud.Pdf.FormattingObjects.MasterPages;
+using Skybrud.Pdf.FormattingObjects.Pages;
 
 namespace Skybrud.Pdf.FormattingObjects {
     
-    public class FoDocument {
+    public class FoDocument : FoElement {
 
-        private FoLayoutMasterSet _layoutMasterSet = new FoLayoutMasterSet();
-        private List<FoPage> _pages = new List<FoPage>();
+        #region Properties
 
-        public static XNamespace Namespace {
-            get { return "http://www.w3.org/1999/XSL/Format"; }
+        public IbexProperties Properties { get; set; }
+        
+        /// <summary>
+        /// A wrapper around all masters used in the document.
+        /// </summary>
+        public FoLayoutMasterSet LayoutMasterSet { get; set; } = new FoLayoutMasterSet();
+
+        /// <summary>
+        /// Specifies how to create a (sub-)sequence of pages within a document; for example, a chapter of a report.
+        /// </summary>
+        public FoPageSequenceCollection PageSequences { get; } = new FoPageSequenceCollection();
+
+        #endregion
+
+        #region Member methods
+
+        public void AddPageSequence(FoPageSequence pageSequence) {
+            PageSequences.Add(pageSequence);
         }
 
-        public static XNamespace NamespaceIbex {
-            get { return "http://www.xmlpdf.com/2003/ibex/Format"; }
+        protected override void RenderAttributes(XElement element, FoRenderOptions options) {
+            element.Add(new XAttribute(XNamespace.Xmlns + "fo", FoUtils.Namespaces.Fo));
+            if (Properties != null) element.Add(new XAttribute(XNamespace.Xmlns + "ibex", FoUtils.Namespaces.Ibex));
         }
-
-        public string Title;
-        public string Author;
-        public string Subject;
-        public string[] Keywords;
-        public string Creator;
-
-        public FoLayoutMasterSet LayoutMasterSet {
-            get { return _layoutMasterSet; }
-        }
-
-        public void AddPage(FoPage page) {
-            _pages.Add(page);
-        }
-
-        public XElement ToXElement() {
-            return ToXElement(default(FoRenderOptions));
-        }
-
-        public XElement ToXElement(FoRenderOptions options) {
-
-            XElement element = new XElement(Namespace + "root",
-                new XAttribute(XNamespace.Xmlns + "fo", Namespace)
-                //new XAttribute(XNamespace.Xmlns + "ibex", NamespaceIbex)
-            );
-
-            XElement xProperties = new XElement(NamespaceIbex + "properties");
-
-            if (!String.IsNullOrEmpty(Title)) xProperties.Add(new XAttribute("title", Title));
-            if (!String.IsNullOrEmpty(Author)) xProperties.Add(new XAttribute("author", Author));
-            if (!String.IsNullOrEmpty(Subject)) xProperties.Add(new XAttribute("subject", Subject));
-            if (Keywords != null && Keywords.Length > 0) xProperties.Add(new XAttribute("title", String.Join(",", Keywords)));
-            if (!String.IsNullOrEmpty(Creator)) xProperties.Add(new XAttribute("creator", Creator));
-
+        
+        protected override void RenderChildren(XElement element, FoRenderOptions options) {
+            base.RenderChildren(element, options);
+            if (Properties != null) element.Add(Properties.ToXElement(options));
             element.Add(LayoutMasterSet.ToXElement(options));
-
-            foreach (var page in _pages) {
-                element.Add(page.ToXElement(options));
-            }
-
-            return element;
-
+            foreach (FoPageSequence pageSequence in PageSequences) element.Add(pageSequence.ToXElement(options));
         }
+
+        public override XElement ToXElement(FoRenderOptions options) {
+            XElement element = new XElement(FoUtils.Namespaces.Fo + "root");
+            RenderAttributes(element, options);
+            RenderChildren(element, options);
+            return element;
+        }
+
         public XDocument ToXDocument() {
             return ToXDocument(default(FoRenderOptions));
         }
@@ -91,16 +82,65 @@ namespace Skybrud.Pdf.FormattingObjects {
             return ToXElement().ToString(options);
         }
 
-        public FoPage CreatePage(string masterPageName) {
-            return CreatePage(masterPageName, null);
+        public FoPageSequence CreatePageSequence(string masterPageName) {
+            return CreatePageSequence(masterPageName, null);
         }
 
-        public FoPage CreatePage(string masterPageName, string id) {
-            FoPage page = new FoPage(masterPageName) { Id = id };
-            AddPage(page);
+        public FoPageSequence CreatePageSequence(string masterPageName, string id) {
+            FoPageSequence page = new FoPageSequence(masterPageName) { Id = id };
+            AddPageSequence(page);
             return page;
         }
-    
+
+        /// <summary>
+        /// Saves the <strong>XSL-FO</strong> document to the specified <paramref name="stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        public void Save(Stream stream) {
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            Save(stream, default(FoRenderOptions));
+        }
+
+        public void Save(Stream stream, FoRenderOptions options) {
+
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+
+            // Convert the document to an instance of "XDocument"
+            XDocument document = ToXDocument(options);
+            
+            // Write the XML to "stream"
+            document.Save(stream, options?.SaveOptions ?? SaveOptions.None);
+
+        }
+
+        /// <summary>
+        /// Save the <strong>XSL-FO</strong> document to a new stream, and returns that stream.
+        /// </summary>
+        /// <returns>An instance of <see cref="MemoryStream"/> representing the <strong>XSL-FO</strong> document.</returns>
+        public MemoryStream GetStream() {
+            return GetStream(default(FoRenderOptions));
+        }
+
+        /// <summary>
+        /// Save the <strong>XSL-FO</strong> document to a new stream, and returns that stream.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <returns>An instance of <see cref="MemoryStream"/> representing the <strong>XSL-FO</strong> document.</returns>
+        public MemoryStream GetStream(FoRenderOptions options) {
+
+            // Initialize a new memory stream
+            MemoryStream ms = new MemoryStream();
+
+            // Save the XSL-FO document to the stream
+            Save(ms, options);
+
+            // Return the stream.
+            return ms;
+
+        }
+
+        #endregion
+
     }
 
 }

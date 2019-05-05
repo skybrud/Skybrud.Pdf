@@ -3,26 +3,32 @@ using System.Xml.Linq;
 
 namespace Skybrud.Pdf.FormattingObjects {
 
-    public class FoBlockContainer : FoContainer {
+    public class FoBlockContainer : FoContainer<FoContainer> {
 
-        public FoBlockContainer() {
-            // Expose default constructor
+        #region Constructors
+
+        public FoBlockContainer() { }
+
+        public FoBlockContainer(IEnumerable<FoContainer> children) {
+            AddRange(children);
         }
 
-        public FoBlockContainer(IEnumerable<FoBaseElement> elements) {
-            AddRange(elements);
+        public FoBlockContainer(params FoContainer[] children) {
+            AddRange(children);
         }
 
-        public FoBlockContainer(params FoBaseElement[] elements) {
-            AddRange(elements);
-        }
+        #endregion
 
+        #region Member methods
+        
         public override XElement ToXElement(FoRenderOptions options) {
-            XElement xBlockContainer = new XElement(FoDocument.Namespace + "block-container");
-            AddAttributes(xBlockContainer);
-            AddChildren(xBlockContainer, Elements, options);
+            XElement xBlockContainer = Fo("block-container");
+            RenderAttributes(xBlockContainer, options);
+            RenderChildren(xBlockContainer, options);
             return xBlockContainer;
         }
+
+        #endregion
 
     }
 

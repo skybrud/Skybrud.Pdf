@@ -1,20 +1,21 @@
-﻿using Skybrud.Pdf.FormattingObjects.Styles;
+﻿using System;
+using Skybrud.Pdf.FormattingObjects.Styles;
 
 namespace Skybrud.Pdf.FormattingObjects.Extensions {
 
     public static class FoExtensions {
 
-        /// <summary>
-        /// Adds (appends) <see cref="element"/> to <paramref name="parent"/>.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="element">The element to be added.</param>
-        /// <param name="parent">The parent container.</param>
-        /// <returns><paramref name="element"/>.</returns>
-        public static T AddTo<T>(this T element, FoContainer parent) where T : FoContainer {
-            parent.Add(element);
-            return element;
-        }
+        ///// <summary>
+        ///// Adds (appends) <see cref="element"/> to <paramref name="parent"/>.
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="element">The element to be added.</param>
+        ///// <param name="parent">The parent container.</param>
+        ///// <returns><paramref name="element"/>.</returns>
+        //public static T AddTo<T>(this T element, FoContainer parent) where T : FoContainer {
+        //    parent.Add(element);
+        //    return element;
+        //}
 
         public static T SetColor<T>(this T container, string color) where T : FoContainer {
             container.Color = color;
@@ -69,6 +70,10 @@ namespace Skybrud.Pdf.FormattingObjects.Extensions {
         public static T SetMarginLeft<T>(this T container, string value) where T : FoContainer {
             container.MarginLeft = value;
             return container;
+        }
+
+        internal static bool IsDefault(this Enum enumValue) {
+            return (int) Convert.ChangeType(enumValue, typeof(int)) == 0;
         }
 
     }
