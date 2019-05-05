@@ -1,0 +1,19 @@
+{
+  "name": "Skybrud.Pdf",
+  "url": "https://github.com/skybrud/Skybrud.Pdf",
+  "license": {
+    "name": "MIT",
+    "url": "https://github.com/skybrud/Skybrud.Pdf/blob/master/LICENSE.md"
+  },
+  "author": {
+    "name": "Anders Bjerner",
+    "url": "https://www.skybrud.dk/"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-nuget": "~0.1.4",
+    "grunt-zip": "~0.17.0",
+    "grunt-contrib-clean": "^0.6.0"
+  }
+}

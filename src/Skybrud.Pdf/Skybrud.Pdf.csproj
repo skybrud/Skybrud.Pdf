@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net45;net46;net47;net472</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,6 +17,10 @@
     <PackageLicenseUrl>https://github.com/skybrud/Skybrud.Pdf/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/skybrud/Skybrud.Pdf</PackageProjectUrl>
     <PackageIconUrl>http://www.skybrud.dk/img/5431sk/icon/favicon.ico</PackageIconUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Skybrud.Pdf.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
